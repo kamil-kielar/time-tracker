@@ -7,11 +7,13 @@ import "./helpers/external_links.js";
 // ----------------------------------------------------------------------------
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
+require ('jquery/dist/jquery.min');
+require ('bootstrap/dist/js/bootstrap.bundle');
 
+import $ from "jquery";
+// import { Vue } from "vue";
 import { remote } from "electron";
 import jetpack from "fs-jetpack";
-import { greet } from "./hello_world/hello_world";
-import env from "env";
 
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
@@ -26,10 +28,25 @@ const osMap = {
   linux: "Linux"
 };
 
+    $(document).ready(function(){
+        function getdate(){
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            if(s<10){
+                s = "0"+s;
+            }
+
+            $("h2").text(h+" : "+m+" : "+s);
+            setTimeout(function(){getdate()}, 500);
+        }
+
+        $("#start").click(getdate);
+    });
+
 document.querySelector("#app").style.display = "block";
-document.querySelector("#greet").innerHTML = greet();
-document.querySelector("#os").innerHTML = osMap[process.platform];
-document.querySelector("#author").innerHTML = manifest.author;
-document.querySelector("#env").innerHTML = env.name;
-document.querySelector("#electron-version").innerHTML =
-  process.versions.electron;
+// document.querySelector("#os").innerHTML = osMap[process.platform];
+// document.querySelector("#author").innerHTML = 'Kamil Kielar';
+// document.querySelector("#env").innerHTML = env.name;
+// document.querySelector("#electron-version").innerHTML = process.versions.electron;
